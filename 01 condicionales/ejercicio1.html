@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ejercicio 1: Resolver una ecuacion cuadratica</h1>
+</body>
+<script>
+    let a = Number(prompt("Ingrese el valor de a: "));
+    let b = Number(prompt("Ingrese el valor de b: "));
+    let c = Number(prompt("Ingrese el valor de c:"));
+    let resultado = undefined;
+    let resultado2 ;
+    if (a != 0){
+        if ((b**2 - 4*a*c)>0){
+            resultado = (-b) - Math.sqrt(b **2 - 4 * a * c)
+            resultado /= 2 * a
+            resultado2 = (-b) - Math.sqrt(b **2 - 4 * a * c)
+            resultado2 = 2 * a
+        } else{
+            alert("La operacion debe ser mayor a 0");
+        }
+    }else{
+        alert("El a no puede valer 0");
+    }
+    console.log("El resultado 1 es: ");
+    console.log(resultado);
+    console.log("El resultado 2 es: ");
+    console.log(resultado2)
+    document.write(resultado);
+    document.write(resultado2);
+</script>
+</html>
