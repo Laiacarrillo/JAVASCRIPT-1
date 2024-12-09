@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Ejercicio Fecha y Modularizacion</title>
+    <script src="gestorfechas.js" src="gestorclientes.js"></script>
+</head>
+<body>
+    <div class="min-h-full">
+        <main>
+          <div class="container ml-auto mr-auto flex flex-wrap items-start mt-8">
+  
+            <div class="w-full pl-2 pr-2 mb-4 mt-4">
+              <h1 class="text-3xl font-extrabold text-center"> Gestion de Membresías en una Farmacia </h1>
+            </div>
+          </div> 
+  
+          <div class="container ml-auto mr-auto flex items-center justify-center">
+            <div class="w-full md:w-1/2">
+  
+              <!-- Formulario -->
+              <div class="w-full pl-2 pr-2 mb-4 mt-4">
+                <h2 class="font-extrabold text-center"> Registrar un cliente</h2>
+              </div>
+              <hr><hr><hr>
+              <form class="bg-white px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                  <div class="grid grid-flow-row sm:grid-flow-col gap-3">
+                    <div class="sm:col-span-4 justify-center">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Registrar un nombre </label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nya" type="text" placeholder="Laia Carrillo" required>
+                      </div>
+                    <div class="sm:col-span-4 justify-center">
+                      <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Registrar un cliente </label>
+                      <input type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nya" type="text" placeholder="Fecha de inscripción" required>
+                    </div>
+                    <div class="sm:col-span-4 justify-center">
+                      <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Duración de la membresía</label>
+                      <input type="date"class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="ctorres@mail.com" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full pl-2 pr-2 mb-4 mt-4">
+                    <h2 class="font-extrabold text-center">Verificar membresía activa</h2>
+                  </div>
+                  <hr><hr><hr>
+                <div class="mb-4">
+                  <hr><hr>
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="asunto"> Fecha</label>
+                  <hr><hr>
+                  <input type= "date"class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="asunto" type="text" required>
+                </div>
+                <div class="w-full pl-2 pr-2 mb-4 mt-4">
+                    <h2 class="font-extrabold text-center"> Listar clientes activos</h2>
+                  </div>
+                  <button class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Button
+                  </button>
+                  
+              </form>              
+              
+            </div>
+  
+          </div> 
+  
+        </main>     
+        
+      </div>
+  
+    
+</body>
+
+</html>

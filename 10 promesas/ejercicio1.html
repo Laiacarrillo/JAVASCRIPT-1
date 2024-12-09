@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio clase Callbacks y Asincronía</title>
+</head>
+<body>
+  <h1>Salida</h1>
+  <div id="salida"></div> 
+       
+</body>
+<script>
+    const posicion = ["Primero","Segundo","Tercero","Cuarto","Quinto","Sexto","Septimo","Octavo"];
+
+    function Mensaje (letra, puesto){
+        const salida = document.getElementById("Salida");
+        const tiempo = new Date().toLocaleTimeString();
+        const div = document.createElement("div");
+        div.textContent = `${letra} [Enviado de: ${posicion[puesto]}] apareció en ${tiempo}`;
+        salida.appendChild(div);
+    }
+
+    function time(tm) {
+        return new Promise(resolve=>{
+            setTimeout(resolve,tm);
+        }) 
+
+    }
+    window,onload = function(){
+        let puesto = o;
+    }
+
+    Mensaje("A", puesto);
+    Mensaje("B",puesto);
+    setTimeout(()=>{
+        Mensaje("C", puesto)
+    })
+    const randomdetm = math.floor(math.random());
+    setTimeout(()=>{
+        Mensaje("D", puesto);
+    })
+    setTimeout(()=>{
+        Mensaje("E", puesto);
+    }, 2000)
+     setTimeout(()=>{
+        Mensaje("G", puesto);
+    }, 2000)
+    setTimeout(()=>{
+        Mensaje("H", puesto);
+    }, 3000)
+    
+    const TiempoF = 7000 -randomdetm - 2000;
+    setTimeout(()=>{
+        Mensaje("F", puesto);
+    })
+
+
+
+    // const now = new Date();
+    // const hours = now.getHours().toString().padStart(2, '0'); 
+    // const minutes = now.getMinutes().toString().padStart(2, '0');
+    // const seconds = now.getSeconds().toString().padStart(2, '0');
+    // const Time = `${hours}:${minutes}:${seconds}`;
+    // document.getElementById('time').textContent = Time;
+
+    // function Salida(letra, tiempo){
+    //     setTimeout
+    //     console.log(``)
+    // }
+
+    // const Promesa = new Promise ((resolve,reject) =>{
+    //     setTimeout (function(){
+    //         if (datos){
+    //             resolve(datos);
+    //         } else{
+    //             reject('No hay ningun dato');
+    //         }
+    //     }, 5000);
+    // })
+</script>
+</html>
