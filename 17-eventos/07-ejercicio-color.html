@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <button>Cambiar color de Fondo</button>
+    <script>
+        const letters = "0123456789ABCDEF"
+        const boton = document.querySelector("boton");
+
+        boton.addEventListener("click", changeBackgroundColor)
+        const changeBackgroundColor = () =>
+            document.body.style.backgroundColor = getRandomColor();
+
+        const getRandomColor = () => Array(6).fill("").reduce(
+            p => p += letters[Math.floor(Math.random() * 16)], "#")
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caja</title>
+</head>
+<style>
+    html{
+        height: 60vh;
+    }
+    body{
+        font-family: sans-serif;
+        text-align: center;
+    }
+    #cuadro{
+        position: absolute;
+        border: 1px solid forestgreen;
+        border-radius: 8px;
+        background-color: forestgreen;
+        width: 10vw;
+        height: 10vw;
+    }
+</style>
+<body>
+    <h2>Intenta atrapar el cuadro</h1>
+    <div id="cuadro">
+    </div>
+</body>
+<script>
+    const cuadro = document.getElementById("cuadro");
+
+    cuadro.addEventListener("mouseover", () => {
+        const maxWidth = window.innerWidth - cuadro.offsetWidth;
+        const maxHeight = window.innerHeight - cuadro.offsetHeight;
+
+        cuadro.style.left = (Math.random() * maxHeight) + "px";
+        cuadro.style.top = (Math.random() * maxWidth) + "px";
+    });
+</script>
+</html>

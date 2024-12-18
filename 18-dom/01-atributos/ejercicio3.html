@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión Celsius a Fahrenheit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-2xl rounded-2xl p-10 max-w-lg w-full">
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-8 text-center">Conversión Celsius a Fahrenheit</h1>
+
+        <div class="mb-6">
+            <label for="celsius" class="block text-lg font-semibold text-gray-700">Grados Celsius:</label>
+            <input type="number" id="celsius" placeholder="Ingrese grados Celsius"
+                class="mt-3 block w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-purple-500 focus:border-purple-500" />
+        </div>
+
+        <div class="mb-6">
+            <label for="fahrenheit" class="block text-lg font-semibold text-gray-700">Grados Fahrenheit:</label>
+            <input type="number" id="fahrenheit" placeholder="Ingrese grados Fahrenheit"
+                class="mt-3 block w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-purple-500 focus:border-purple-500" />
+        </div>
+
+        <div class="flex justify-center mb-6">
+            <button onclick="calculateFarenheit()"
+                class="bg-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-purple-700 focus:ring focus:ring-purple-300">Calcular</button>
+        </div>
+
+        <div class="flex justify-between items-center space-x-4 mb-6">
+            <button onclick="convertToFahrenheit()"
+                class="bg-green-600 text-white px-5 py-3 rounded-xl font-bold hover:bg-green-700 focus:ring focus:ring-green-300">Convertir a Fahrenheit</button>
+            <button onclick="convertToCelsius()"
+                class="bg-blue-600 text-white px-5 py-3 rounded-xl font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300">Convertir a Celsius</button>
+        </div>
+
+        <textarea id="resultado" readonly
+            class="block w-full px-5 py-3 border border-gray-300 rounded-xl bg-gray-100 focus:outline-none focus:ring-0 text-gray-700"
+            cols="100" rows="5" placeholder="El resultado aparecerá aquí..."></textarea>
+    </div>
+
+    <script>
+        function calculateFarenheit() {
+            let celsius = parseFloat(document.querySelector("#celsius").value);
+            if (!isNaN(celsius)) {
+                let fahrenheit = (celsius * 9 / 5) + 32;
+                document.querySelector("#fahrenheit").value = fahrenheit;
+            }
+        }
+        function convertToFahrenheit() {
+            let celsius = parseFloat(document.querySelector("#celsius").value);
+            if (!isNaN(celsius)) {
+                let fahrenheit = (celsius * 9 / 5) + 32;
+                document.querySelector("#resultado").value = `${celsius} grados Celsius son ${fahrenheit.toFixed(2)} grados Fahrenheit.`;
+            } else {
+                alert("Por favor, ingrese un valor válido en Celsius.");
+            }
+        }
+
+        function convertToCelsius() {
+            let fahrenheit = parseFloat(document.querySelector("#fahrenheit").value);
+            if (!isNaN(fahrenheit)) {
+                let celsius = (fahrenheit - 32) * 5 / 9;
+                document.querySelector("#resultado").value = `${fahrenheit} grados Fahrenheit son ${celsius.toFixed(2)} grados Celsius.`;
+            } else {
+                alert("Por favor, ingrese un valor válido en Fahrenheit.");
+            }
+        }
+    </script>
+</body>
+
+</html>
