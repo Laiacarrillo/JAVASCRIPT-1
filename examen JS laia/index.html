@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+</head>
+<style>
+    :root {
+        --color-principal: #4a90e2;    
+        --color-texto: #333333;        
+        --color-fondo: #e4abab;             
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: var(--color-fondo);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .contenedor {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 600px;
+    }
+
+    h1 {
+        color: var(--color-texto);
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .formulario {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .boton {
+        background-color: var(--color-principal);
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .boton:hover {
+        background-color: #a4a8e7;
+    }
+</style>
+<body>
+    <div class="contenedor">
+        <h1>Ingreso Tic-Tac-Toe</h1>
+        <form id="formularioLogin" class="formulario">
+            <label for="nombreUsuario">Alias jugador 1:</label>
+            <input type="text" id="nombreUsuario" placeholder="Ingresa tu alias" />
+            <label for="nombreUsuario2">Alias jugador 2:</label>
+            <input type="text" id="nombreUsuario2" placeholder="Ingresa tu alias" />
+            <button type="submit" class="boton">Comienza el juego</button>
+        </form>
+
+        <h1>Mejores jugadores</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Jugador</th>
+                    <th>Puntaje</th>
+                </tr>
+            </thead>
+            <tbody id="tablaPosiciones"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function cargarPuntajes() {
+            const tabla = document.getElementById("tablaPosiciones");
+            tabla.innerHTML = ""; 
+
+            const puntajes = JSON.parse(sessionStorage.getItem("puntajes")) || [];
+            puntajes.sort((a, b) => b.puntaje - a.puntaje);
+
+            puntajes.forEach(({ jugador, puntaje }) => {
+                const fila = document.createElement("tr");
+                fila.innerHTML = `<td>${jugador}</td><td>${puntaje}</td>`;
+                tabla.appendChild(fila);
+            });
+        }
+
+        document.getElementById("formularioLogin").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const jugador1 = document.getElementById("nombreUsuario").value.trim();
+            const jugador2 = document.getElementById("nombreUsuario2").value.trim();
+
+            if (jugador1 && jugador2) {
+                sessionStorage.setItem("jugador1", jugador1);
+                sessionStorage.setItem("jugador2", jugador2);
+                window.location.href = "juego.html";
+            } else {
+                alert("Ambos nombres son requeridos.");
+            }
+        });
+
+
+        cargarPuntajes();
+    </script>
+</body>
+</html>

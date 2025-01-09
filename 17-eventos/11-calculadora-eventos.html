@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora - Eventos</title>
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #9fc8db;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
+
+    .calculadora {
+        background-color: #f9f9f9;
+        border-radius: 18px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        width: 296px;
+    }
+
+    #pantalla {
+        background-color: #1e1e1e;
+        color: white;
+        padding: 17px;
+        text-align: right;
+        font-size: 1.9rem;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .boton {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+    }
+
+    button {
+        border: none;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: #ffffff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+        background-color: #e0e0e0;
+    }
+
+    #igual {
+        background-color: #ff9f66;
+        color: white;
+        grid-row: span 4;
+    }
+</style>
+
+<body>
+    <div class="calculadora">
+        <div id="pantalla">0</div>
+        <div class="boton">
+            <button id="sumar">+</button>
+            <button id="restar">-</button>
+            <button id="multiplicar">x</button>
+            <button id="dividir">÷</button>
+
+            <button id="siete">7</button>
+            <button id="ocho">8</button>
+            <button id="nueve">9</button>
+            <button id="igual">=</button>
+            <button id="cuatro">4</button>
+            <button id="cinco">5</button>
+            <button id="seis">6</button>
+            <button id="uno">1</button>
+            <button id="dos">2</button>
+            <button id="tres">3</button>
+            <button id="cero">0</button>
+            <button id="punto">.</button>
+            <button id="C">C</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    const cero = document.getElementById('cero');
+    const uno = document.getElementById('uno')
+    const dos = document.getElementById('dos')
+    const tres = document.getElementById('tres')
+    const cuatro = document.getElementById('cuatro')
+    const cinco = document.getElementById('cinco')
+    const seis = document.getElementById('seis')
+    const siete = document.getElementById('siete')
+    const ocho = document.getElementById('ocho')
+    const nueve = document.getElementById('nueve')
+    const punto = document.getElementById('punto')
+    const igual = document.getElementById('igual')
+    const C = document.getElementById('C')
+    const pantalla = document.getElementById('pantalla')
+    const suma = document.getElementById('sumar')
+    const resta = document.getElementById('restar')
+    const multiplicar = document.getElementById('multiplicar')
+    const dividir = document.getElementById('dividir')
+    let resultado = '';
+    let operacion = '';
+    let guardar = '';
+
+    function operar() {
+        const numero = parseFloat(guardar)
+        if (resultado === '') {
+            resultado = numero
+        } else {
+            switch (operacion) {
+                case 'suma': 
+                resultado += numero;
+                break;
+                case 'resta': 
+                resultado -= numero;
+                break;
+                case 'multiplicar': 
+                resultado *= numero;
+                break;
+                case 'dividir':
+                    if (numero === 0) {
+                        resultado = 'Infinity'
+                    }  else {
+                        resultado /= numero;
+                    }
+                break;
+        }
+    }
+    pantalla.textContent = resultado
+    guardar = ''
+}
+
+    function numero(num){
+        if(pantalla.textContent === '0' || guardar === ''){
+            pantalla.textContent = num;
+        }else{
+            pantalla.textContent += num;
+        }
+        guardar = pantalla.textContent
+    }
+
+
+    cero.addEventListener("click", () =>{
+        numero(cero.textContent);
+    });
+    uno.addEventListener("click", () =>{
+        numero(uno.textContent);
+    });
+    dos.addEventListener("click", () =>{
+        numero(dos.textContent);
+    });
+    tres.addEventListener("click", () =>{
+        numero(tres.textContent);
+    });
+    cuatro.addEventListener("click", () =>{
+        numero(cuatro.textContent);
+    });
+    cinco.addEventListener("click", () =>{
+        numero(cinco.textContent);
+    });
+    seis.addEventListener("click", () =>{
+        numero(seis.textContent);
+    });
+    siete.addEventListener("click", () =>{
+        numero(siete.textContent);
+    });
+    ocho.addEventListener("click", () =>{
+        numero(ocho.textContent);
+    });
+    nueve.addEventListener("click", () =>{
+        numero(nueve.textContent);
+    });
+
+    C.addEventListener("click", () =>{
+        pantalla.textContent = '0';
+        resultado = '';
+        operacion = '';
+        guardar = '';
+    });
+    punto.addEventListener("click", () =>{
+        numero(punto.textContent);
+    })
+    suma.addEventListener("click", () =>{
+        operar();
+        operacion = 'suma';
+        pantalla.textContent = '+';
+    });
+    resta.addEventListener("click", () =>{
+        operar();
+        operacion = 'resta';
+        pantalla.textContent = '-'
+    });
+    multiplicar.addEventListener("click", () =>{
+        operar();
+        operacion = 'multiplicar';
+        pantalla.textContent = 'x'
+    });
+    dividir.addEventListener("click", () =>{
+        operar();
+        operacion = 'dividir';
+        pantalla.textContent = '÷'
+    });
+    igual.addEventListener("click", () =>{
+        if (operacion) {
+            operar();
+            operacion = '';
+        }
+    });
+</script>
+
+</html>

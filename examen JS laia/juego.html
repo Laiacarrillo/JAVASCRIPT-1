@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego</title>
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #e4abab;
+        text-align: center;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 75vh;
+    }
+
+    .tictac {
+        border-radius: 18px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        width: 290px;
+    }
+
+    .boton {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+    }
+
+    button {
+        border: none;
+        border-radius: 8px;
+        padding: 60px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: #ffffff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .turno {
+        margin-top: 20px;
+        font-size: 1.5rem;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="jugadores">
+        <h2 id="jugador1">Jugador 1: 0</h2>
+        <h2 id="jugador2">Jugador 2: 0</h2>
+    </div>
+
+    <div class="turno" id="turno">Es el turno de jugador 1</div>
+
+    <div class="container">
+        <div class="tictac">
+            <div class="boton">
+                <button id="uno"></button>
+                <button id="dos"></button>
+                <button id="tres"></button>
+                <button id="cuatro"></button>
+                <button id="cinco"></button>
+                <button id="seis"></button>
+                <button id="siete"></button>
+                <button id="ocho"></button>
+                <button id="nueve"></button>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="window.location.href='index.html'" class="boton">Volver</button>
+
+    <h1>Mejores jugadores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Jugador</th>
+                <th>Puntaje</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody id="tablaPosiciones"></tbody>
+    </table>
+
+    <script>
+        let jugador1 = sessionStorage.getItem("jugador1") || "Jugador 1";
+        let jugador2 = sessionStorage.getItem("jugador2") || "Jugador 2";
+
+        const uno = document.getElementById("uno");
+        const dos = document.getElementById("dos");
+        const tres = document.getElementById("tres");
+        const cuatro = document.getElementById("cuatro");
+        const cinco = document.getElementById("cinco");
+        const seis = document.getElementById("seis");
+        const siete = document.getElementById("siete");
+        const ocho = document.getElementById("ocho");
+        const nueve = document.getElementById("nueve");
+
+        const turnoDiv = document.getElementById("turno");
+        const jugador1Score = document.getElementById("jugador1");
+        const jugador2Score = document.getElementById("jugador2");
+
+        let turno = "X";
+        let contador = 0;
+        let puntosJ1 = 0;
+        let puntosJ2 = 0;
+        let tablero = ['', '', '', '', '', '', '', '', ''];
+
+        function cargarPuntajes() {
+            const tabla = document.getElementById("tablaPosiciones");
+            tabla.innerHTML = ""; 
+
+            const puntajes = JSON.parse(sessionStorage.getItem("puntajes")) || [];
+            puntajes.sort((a, b) => b.puntaje - a.puntaje);
+
+            puntajes.forEach(({ jugador, puntaje, fecha }) => {
+                const fila = document.createElement("tr");
+                fila.innerHTML = `<td>${jugador}</td><td>${puntaje}</td><td>${fecha}</td>`;
+                tabla.appendChild(fila);
+            });
+        }
+
+        function actualizarTurno() {
+            turnoDiv.textContent = `Es el turno de ${turno === "X" ? jugador1 : jugador2}`;
+        }
+
+        function registrarGanador(jugador, puntaje) {
+            const fecha = new Date().toLocaleString();
+            const puntajes = JSON.parse(sessionStorage.getItem("puntajes")) || [];
+            
+            const jugadorExistente = puntajes.find(p => p.jugador === jugador);
+
+            if (jugadorExistente) {
+                jugadorExistente.puntaje += puntaje;
+                jugadorExistente.fecha = fecha;
+            } else {
+                puntajes.push({ jugador, puntaje, fecha });
+            }
+
+            puntajes.sort((a, b) => b.puntaje - a.puntaje);
+            sessionStorage.setItem("puntajes", JSON.stringify(puntajes));
+            cargarPuntajes();
+        }
+
+        function verificarGanador() {
+            const combinaciones = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            for (let combinacion of combinaciones) {
+                const [a, b, c] = combinacion;
+                if (tablero[a] && tablero[a] === tablero[b] && tablero[a] === tablero[c]) {
+                    if (tablero[a] === "X") {
+                        puntosJ1 += 5;
+                        registrarGanador(jugador1, puntosJ1);
+                        alert(`${jugador1} ganó con ${puntosJ1} puntos!`);
+                    } else {
+                        puntosJ2 += 5;
+                        registrarGanador(jugador2, puntosJ2);
+                        alert(`${jugador2} ganó con ${puntosJ2} puntos!`);
+                    }
+                    resetearTablero();
+                    return;
+                }
+            }
+
+            if (contador === 9) {
+                alert("¡Empate!");
+                resetearTablero();
+            }
+        }
+
+        function resetearTablero() {
+            tablero = ['', '', '', '', '', '', '', '', ''];
+            [uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve].forEach(boton => boton.textContent = '');
+            contador = 0;
+            turno = "X";
+            actualizarTurno();
+        }
+
+        [uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve].forEach((boton, index) => {
+            boton.addEventListener("click", () => {
+                if (!tablero[index]) {
+                    tablero[index] = turno;
+                    boton.textContent = turno;
+                    turno = turno === "X" ? "O" : "X";
+                    contador++;
+                    actualizarTurno();
+                    verificarGanador();
+                }
+            });
+        });
+
+        actualizarTurno();
+        cargarPuntajes();
+    </script>
+</body>
+</html>
