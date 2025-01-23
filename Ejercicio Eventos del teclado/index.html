@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="circle" class="circle"></div>
+    <script>
+        const circle = document.getElementById("circle");
+        let cantidadX = 0;
+        let cantidadY = 0;
+
+        window.addEventListener('keydown', (e) => {
+            const tecla = e.key;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const circleSize = 50; 
+
+            switch (tecla) {
+                case 'ArrowRight':
+                    if (cantidadX + circleSize < windowWidth) cantidadX += 10;
+                    break;
+                case 'ArrowLeft':
+                    if (cantidadX > 0) cantidadX -= 10;
+                    break;
+                case 'ArrowDown':
+                    if (cantidadY + circleSize < windowHeight) cantidadY += 10;
+                    break;
+                case 'ArrowUp':
+                    if (cantidadY > 0) cantidadY -= 10;
+                    break;
+            }
+
+            circle.style.transform = `translate(${cantidadX}px, ${cantidadY}px)`;
+        });
+    </script>
+</body>
+
+</html>

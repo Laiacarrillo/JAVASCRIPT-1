@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Departamentos y Municipios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .name {
+            font-weight: bold;
+        }
+        .population {
+            color: #555;
+        }
+        .highlight {
+            background-color: #dff0d8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Departamentos y Municipios de Colombia</h1>
+    <div class="container">
+        <input type="text" id="search" placeholder="Buscar ciudad">
+        <ul id="departments"></ul>
+    </div>
+
+    <script>
+        const apiUrl = "https://api-colombia.com/api/v1";
+        let allDepartments = [];
+
+        async function fetchDepartments() {
+            try {
+                const response = await fetch(`${apiUrl}/Department`);
+                const data = await response.json();
+                allDepartments = data;
+                displayDepartments(data);
+            } catch (error) {
+                console.error("Error al obtener los datos:", error);
+            }
+        }
+
+        async function search(query) {
+            if (!query) {
+                displayDepartments(allDepartments);
+                return;
+            }
+
+            const department = allDepartments.find(d => d.name.toLowerCase() === query.toLowerCase());
+            if (department) {
+                displayDepartments(allDepartments, null);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${apiUrl}/City`);
+                const cities = await response.json();
+                const city = cities.find(c => c.name.toLowerCase() === query.toLowerCase());
+
+                if (city) {
+                    const cityDepartment = allDepartments.find(d => d.id === city.departmentId);
+                    city.department = cityDepartment ? cityDepartment.name : "No disponible";
+                    displayDepartments(allDepartments, city);
+                } else {
+                    displayDepartments(allDepartments);
+                }
+            } catch (error) {
+                console.error("Error al buscar ciudades:", error);
+            }
+        }
+
+        function displayDepartments(departments, cityResult = null) {
+            const departmentsList = document.getElementById('departments');
+            departmentsList.innerHTML = '';
+
+            if (cityResult) {
+                const cityLi = document.createElement('li');
+                cityLi.className = "highlight";
+                cityLi.innerHTML = `
+                    <span class="name">${cityResult.name} (Ciudad)</span>
+                    <span class="population">${cityResult.population.toLocaleString('es-CO')} habitantes</span>
+                    <p><strong>Departamento:</strong> ${cityResult.department}</p>
+                `;
+                departmentsList.appendChild(cityLi);
+            }
+
+            departments.forEach(department => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="name">${department.name}</span>
+                    <span class="population">${department.population.toLocaleString('es-CO')} habitantes</span>
+                `;
+                departmentsList.appendChild(li);
+            });
+        }
+
+        document.getElementById('search').addEventListener('input', function () {
+            const query = this.value.trim();
+            search(query);
+        });
+
+        window.onload = fetchDepartments;
+    </script>
+</body>
+</html>
